@@ -7,9 +7,8 @@ module.exports = function (app) {
   app.get("/api/notes", function (req, res) {
 
     fs.readFile("./db/db.json", "utf8", function (error, data) {
-      if (error) {
-        return console.log(error);
-      }
+      if (error) throw error;
+      
       data = JSON.parse(data);
       res.json(data);
     });
@@ -18,15 +17,10 @@ module.exports = function (app) {
 
   // receives a new note to save on the request body, adds it to the db.json file, and then returns the new note to the client
   app.post("/api/notes", function (req, res) {
-    // console.log(req.body);
     db.push(req.body);
-    // console.log(db);
 
     fs.writeFile("./db/db.json", JSON.stringify(db), function (error, data) {
-      if (error) {
-        return console.log(error);
-      }
-      console.log(data);
+      if (error) throw error;
     });
     res.json(db)
   });
@@ -34,27 +28,19 @@ module.exports = function (app) {
 
   // receives a query parameter containing the id of a note to delete, reads all notes from the db.json file & removes the note with the given id property, and then rewrites the notes to the db.json file.
   app.delete("/api/notes/:id", function (req, res) {
-    console.log("deleting");
+    console.log(`deleting  ID ${req.params.id}`);
     let id = req.params.id;
 
     fs.readFile("./db/db.json", "utf8", function (error, data) {
-      if (error) {
-        return console.log(error);
-      }
-      newDB = [];
+      if (error) throw error;
+
       data = JSON.parse(data);
+      db = data.filter(note => id !== note.id);
 
-      data.forEach((note) => {
-        if (id !== note.id) {
-          newDB.push(note);
-        }
-      });
+      fs.writeFile("./db/db.json", JSON.stringify(db), function (error, data) {
+        if (error) throw error;
 
-      fs.writeFile("./db/db.json", JSON.stringify(newDB), function (error, data) {
-        if (error) {
-          return console.log(error);
-        }
-        res.json(newDB);
+        res.json(db);
       });
     });
   });
