@@ -14,10 +14,14 @@
  
 ## Installation  
 
-  * Clone this repository from Github from the command line by typing: `git clone https://github.com/alexcoulter/note-taker.git`
-  * Navigate to the 'note-taker' folder by typing: `cd note-taker` 
-  * Install dependencies by typing: `npm install`
-  * Run this application by typing: `node server`
+  * Clone this repository from Github from the command line by typing:  
+   `git clone https://github.com/alexcoulter/note-taker.git`
+  * Navigate to the 'note-taker' folder by typing:  
+  `cd note-taker` 
+  * Install dependencies by typing:  
+   `npm install`
+  * Run this application by typing:   
+  `node server`
  
 ## Usage  
 
